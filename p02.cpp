@@ -1,0 +1,47 @@
+//
+
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <stdexcept>
+#include <string>
+
+using namespace std;
+
+int main() {
+  string fileName;
+
+  cout << "Enter filename for stocks: ";
+  fileName = "rstocks-small01.txt";
+  //cin >> fileName;
+
+  ifstream file(fileName);
+  if (!file.is_open()) {
+    throw std::runtime_error("File not found");
+  }
+
+  string stockName, date;
+  float value;
+  map<string,int> maxStockVol;
+
+  // Loop to read the file. On each loop, the stockName, date and value
+  // variables assume the values of a line in the file.
+  while (file >> stockName >> date >> value) {
+    // do something her
+    if (maxStockVol.find(stockName)==maxStockVol.end()){
+      maxStockVol.insert({stockName,value});}
+    if (maxStockVol.find(stockName)!=maxStockVol.end()){
+      if(maxStockVol[stockName] < value){
+        maxStockVol.at(stockName) = value;
+      }
+    }
+  }
+
+  cout << "Maximum volumes for each company: " << endl;
+  for (auto stocks: maxStockVol) {
+    cout << stocks.first << " " << stocks.second << endl;
+  }
+  
+  file.close();
+  return 0;
+}
