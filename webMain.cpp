@@ -19,25 +19,12 @@ int main() {
   if (!file.is_open()) {
     throw std::runtime_error("File not found");
   }
-
-  string stockName, date;
-  float value;
-  map<string,float> sumStockVal;
-
+  
+  string word;
   // Loop to read the file. On each loop, the stockName, date and value
   // variables assume the values of a line in the file.
-  while (file >> stockName >> date >> value) {
-    // do something her
-    if (sumStockVal.find(stockName)==sumStockVal.end()){
-      sumStockVal.insert({stockName,value});}
-    if (sumStockVal.find(stockName)!=sumStockVal.end()){
-      sumStockVal.at(stockName) += value;
-    }
-  }
-
-  cout << "Total volumes per company: " << endl;
-  for (auto stocks: sumStockVal) {
-    cout << stocks.first << ": " << stocks.second << endl;
+  while (file >> word) {
+    // do something here
   }
   
   file.close();
