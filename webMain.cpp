@@ -1,32 +1,51 @@
-//
 
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <stdexcept>
 #include <string>
+#include "webFunctions.hpp"
+#include <list>
+
 
 using namespace std;
 
 int main() {
-  string fileName;
+  string fileName, fileWord;
+  bool fileExit = false;
+  int fileTotal = 0;
 
-  cout << "Enter filename for stocks: ";
-  fileName = "rstocks-small01.txt";
+  cout << "Enter filename: ";
   //cin >> fileName;
+  list<string> filesT = {"pokemon.txt", "rstocks-small01.txt", "rstocks-small02.txt"};// , "rstocks.txt"};
 
-  ifstream file(fileName);
-  if (!file.is_open()) {
-    throw std::runtime_error("File not found");
+
+    for (auto title = filesT.begin(); title != filesT.end(); ++title){
+      fileName = *title;
+      ifstream file(fileName);
+      if (!file.is_open()) {
+        throw std::runtime_error("File not found");
+      }
+      while(file >> fileWord){
+        //cout << cleanupWord(fileWord) << "--- ";;  
+        catalogueWord(fileName, cleanupWord(fileWord));
+      }
+    }
+
+  short browserChoose = 0;
+  string searchWord;
+  while (browserChoose!=-1){
+    cout << "Search Word: ";
+    cin >> searchWord;
+
+    auto search = fullDictionary.find(searchWord);
+    if(search != fullDictionary.end()){cout << "Word Found In " 
+      << search->second.first << "Total: " << search->second.second;}
+
+    cout << "Search Again: "; 
+    cin >> browserChoose;
   }
-  
-  string word;
-  // Loop to read the file. On each loop, the stockName, date and value
-  // variables assume the values of a line in the file.
-  while (file >> word) {
-    // do something here
-  }
-  
-  file.close();
+
+  cout << "Exit";
   return 0;
 }
