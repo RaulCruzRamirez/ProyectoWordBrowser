@@ -1,0 +1,3 @@
+/workspaces/ProyectoWordBrowser/CMakeFiles/webMain.dir
+/workspaces/ProyectoWordBrowser/CMakeFiles/edit_cache.dir
+/workspaces/ProyectoWordBrowser/CMakeFiles/rebuild_cache.dir

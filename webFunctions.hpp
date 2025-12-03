@@ -33,18 +33,16 @@ void catalogueWord(string &fileTitle, string fileWord){
     auto wordInDictionary = fullDictionary.find(wordInFile);
     if(wordInDictionary == fullDictionary.end()){
         fullDictionary.insert({wordInFile, make_pair(fileTitle, 1)});}
-    else{
+    else if (wordInDictionary != fullDictionary.end()){
         bool updatedCount = false;
-        while(wordInDictionary->first == wordInFile && updatedCount == false){
-            if(wordInDictionary->second.first == fileTitle){
-                wordInDictionary->second.second += 1;
-                updatedCount = true;
-            }
-            else{wordInDictionary++;}
-        } 
+        auto selectedWord = fullDictionary.equal_range(fileWord);
+        for(auto search=selectedWord.first; search!=selectedWord.second;++search){
+            if(search->second.first == fileTitle){search->second.second += 1;}
+            updatedCount = true;
+        }
+        if(updatedCount==false){fullDictionary.insert({wordInFile, make_pair(fileTitle, 1)});}
     }
 }
 
-//};
 
 
