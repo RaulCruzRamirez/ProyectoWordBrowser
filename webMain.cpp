@@ -21,59 +21,9 @@ int main() {
       throw std::runtime_error("File not found");
     }
     while(file >> fileWord){
-      //cout << cleanupWord(fileWord) << "--- ";;  
       catalogueWord(fileName, cleanupWord(fileWord));
       }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-for (auto& it1 : fullDictionary)
-{
-    std::cout << "[" << it1.first << "]:";
-    auto it3 = it1.second;
-        cout << it3.first << " " << it3.second
-        << endl;
-    
-    std::cout << '\n';
-}
-
-
-
-//for(auto it = fullDictionary.begin(); it != fullDictionary.end(); it++){
-
-    string oword = "rog";
-          auto selectedWord = fullDictionary.equal_range("rog");
-      for(auto it=selectedWord.first; it!=selectedWord.second;++it){
-  //if(it->first == oword){
-    cout << it->first << endl;
-    cout << " " << it->second.first << " " << it->second.second << endl;  
-   //   }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   short browserChoose = 0;
   string searchWord, userWord;
