@@ -31,18 +31,17 @@ string cleanupWord(string& word){//const{
 void catalogueWord(string &fileTitle, string fileWord){
     string wordInFile = fileWord;
     auto wordInDictionary = fullDictionary.find(wordInFile);
+    auto selectedWord = fullDictionary.equal_range(fileWord);
     if(wordInDictionary == fullDictionary.end()){
-        fullDictionary.insert({wordInFile, make_pair(fileTitle, 1)});}
-    else if (wordInDictionary != fullDictionary.end()){
+        fullDictionary.insert({wordInFile,{fileTitle, 1}});}
+    if (wordInDictionary != fullDictionary.end()){
         bool updatedCount = false;
-        auto selectedWord = fullDictionary.equal_range(fileWord);
-        for(auto search=selectedWord.first; search!=selectedWord.second;++search){
-            if(search->second.first == fileTitle){search->second.second += 1;}
-            updatedCount = true;
+        while(wordInDictionary->first == fileWord && updatedCount == false){
+            if(wordInDictionary->second.first == fileTitle){
+                wordInDictionary->second.second += 1; updatedCount = true;}
+            wordInDictionary++;
         }
-        if(updatedCount==false){fullDictionary.insert({wordInFile, make_pair(fileTitle, 1)});}
+        if(updatedCount==false){fullDictionary.insert({wordInFile,{fileTitle, 1}});}
+        updatedCount = false;
     }
 }
-
-
-
