@@ -76,11 +76,81 @@ int main() {
       //Double Word Search
       cout << "Search First Word: ";
       cin >> userWord1;
-      searchWord = cleanupWord(userWord1);
+      string cleanWord1 = cleanupWord(userWord1);
+
       cout << "Search Second Word: ";
       cin >> userWord2;
-      searchWord = cleanupWord(userWord2);
+      string cleanWord2 = cleanupWord(userWord2);
+      
       //MAKE THE TWO WORD SEARCH
+      map<string,int> countWord1;
+      map<string,int> countWord2;
+
+      //rango de 1ra palabra
+      auto range1 = fullDictionary.equal_range(cleanWord1);
+      for(auto it = range1.first; it != range1.second; ++it){
+        countWord1[it->second.first] = it->second.second;
+      }
+      //rango dela 2da palabra
+      auto range2 = fullDictionary.equal_range(cleanWord2);
+      for(auto it = range2.first; it != range2.second; ++it){
+        countWord2[it->second.first] = it->second.second;
+      }
+      //recorrer .txt que solo tengan ambas palabras
+      map<string,int> combinedCount;
+
+      //1ra
+      for(auto &file1 : countWord1){
+        string fileName = file1.first;
+        int count1 = file1.second;
+        
+        //2da
+        if(countWord2.count(fileName)){
+          int count2 = countWord2[fileName];
+          combinedCount[fileName] = count1 + count2;
+        }
+      }
+    
+      
+      if(combinedCount.empty()){
+        cout << "No files contain BOTH words." << endl;} 
+        else {
+          pair<int,string> firstPlace = {0,"None"};
+          pair<int,string> secondPlace = {0,"None"};
+          pair<int,string> thirdPlace = {0,"None"};
+          pair<int,string> temp;
+        
+        for(auto &data : combinedCount){
+          int totalCount = data.second;
+          string fileName = data.first;
+          
+          if(totalCount >= firstPlace.first){
+            thirdPlace = secondPlace;
+            temp = firstPlace;
+            firstPlace = {totalCount,fileName};
+            secondPlace = temp;
+          }
+          else if(totalCount >= secondPlace.first){
+            thirdPlace = secondPlace;
+            secondPlace = {totalCount,fileName};
+          }
+          else if(totalCount >= thirdPlace.first){
+            thirdPlace = {totalCount,fileName};
+          }
+        }
+        
+        cout << "Top results for BOTH words: " 
+             << cleanWord1 << " + " << cleanWord2 << endl;
+
+        cout << "1. File: " << firstPlace.second 
+            << " - Total: " << firstPlace.first << endl;
+
+        cout << "2. File: " << secondPlace.second 
+            << " - Total: " << secondPlace.first << endl;
+
+        cout << "3. File: " << thirdPlace.second 
+            << " - Total: " << thirdPlace.first << endl;
+      }
     }
   }
   //The end of the function as it exits the progam when the user has finished browsing.
