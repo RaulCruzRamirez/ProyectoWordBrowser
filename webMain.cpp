@@ -1,32 +1,21 @@
-
-#include <fstream>
 #include <iostream>
-#include <map>
+#include <fstream>
 #include <stdexcept>
 #include <string>
-#include "webFunctions.hpp"
 #include <list>
-
+#include <map>
+#include <filesystem>
+#include "webFunctions.hpp"
 
 using namespace std;
+namespace fs = std::filesystem;
 
 int main() {
   string fileName, fileWord;
-
-  list<string> filesT = {"rstocks-small02.txt","rstocks-small01.txt","pokemon.txt"};// , "rstocks.txt"};
-  for (auto title = filesT.begin(); title != filesT.end(); title++){
-    fileName = *title;
-    ifstream file(fileName);
-    if (!file.is_open()) {
-      throw std::runtime_error("File not found");
-    }
-    while(file >> fileWord){
-      catalogueWord(fileName, cleanupWord(fileWord));
-      }
-    }
+  int totalFiles = readFiles("moviesdb2");
 
   short browserChoose = 0;
-  string searchWord, userWord;
+  string searchWord, userWord0, userWord1, userWord2;
       
   while (browserChoose!=-1){
     cout << "Search Functions" << endl <<
@@ -37,8 +26,8 @@ int main() {
     if(browserChoose==1){
       //Single Search
       cout << "Search Word: ";
-      cin >> userWord;
-      searchWord = cleanupWord(userWord);
+      cin >> userWord0;
+      searchWord = cleanupWord(userWord0);
       pair<int, string> firstPlace = {0, "None"};
       pair<int, string> secondPlace = {0, "None"};
       pair<int, string> thirdPlace = {0, "None"};
@@ -67,9 +56,19 @@ int main() {
         }
       }
       cout << "Top three results for: " << searchWord << endl << 
-      "File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl <<
-      "File Name: " << secondPlace.second << " - Times Found: " << secondPlace.first << endl <<
-      "File Name: " << thirdPlace.second << " - Times Found: " << thirdPlace.first << endl;
+      "1. File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl <<
+      "2. File Name: " << secondPlace.second << " - Times Found: " << secondPlace.first << endl <<
+      "3. File Name: " << thirdPlace.second << " - Times Found: " << thirdPlace.first << endl;
+    }
+    if(browserChoose==2){
+      cout << "Search First Word: ";
+      cin >> userWord1;
+      searchWord = cleanupWord(userWord1);
+      cout << "Search Second Word: ";
+      cin >> userWord2;
+      searchWord = cleanupWord(userWord2);
+
+
     }
   }
 
