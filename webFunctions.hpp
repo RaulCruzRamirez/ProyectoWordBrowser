@@ -61,7 +61,7 @@ void catalogueWord(string &fileTitle, string fileWord){
 //for every file and every word inside it. It requires a directory, in string form.
 int readFiles(const string& directory) {
   int counter = 0;
-  string fileWord;
+  string fileWord, fileName;
   for (const auto& entry : fs::directory_iterator(directory)) {
     if (entry.is_regular_file()) {
       std::ifstream file(entry.path());
@@ -70,7 +70,7 @@ int readFiles(const string& directory) {
         continue;
       }
       counter++; 
-      string fileName = entry.path().filename().string();       
+      fileName = entry.path().filename().string();       
       while(file >> fileWord){
         catalogueWord(fileName, cleanupWord(fileWord));
       }
@@ -114,10 +114,22 @@ void singleSearch(){
       thirdPlace.second = search->second.first;
     }
   }
-  cout << "Top three results for: " << searchWord << endl << 
-  "1. File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl <<
-  "2. File Name: " << secondPlace.second << " - Times Found: " << secondPlace.first << endl <<
-  "3. File Name: " << thirdPlace.second << " - Times Found: " << thirdPlace.first << endl;
+  if(firstPlace.first == 0){cout << "No files contain the word " << searchWord << "." << endl;}
+  else if(secondPlace.first == 0){
+    cout << "Top three results for: " << searchWord << endl << 
+    "1. File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl;
+  }
+  else if(thirdPlace.first == 0){
+    cout << "Top three results for: " << searchWord << endl << 
+    "1. File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl <<
+    "2. File Name: " << secondPlace.second << " - Times Found: " << secondPlace.first << endl;
+  }
+  else{
+    cout << "Top three results for: " << searchWord << endl << 
+    "1. File Name: " << firstPlace.second << " - Times Found: " << firstPlace.first << endl <<
+    "2. File Name: " << secondPlace.second << " - Times Found: " << secondPlace.first << endl <<
+    "3. File Name: " << thirdPlace.second << " - Times Found: " << thirdPlace.first << endl;
+  }
 }
 
 //The single word search iterates over the files containing the selected key wordS, searching for the ones 

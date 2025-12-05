@@ -15,19 +15,19 @@ int main() {
   //The user interface of the browser, this is where the user chooses between searching one or two words
   //and exiting the browser. Its divided in two parts one for the single word search and another for the
   // double word search.
-  short browserChoose = 0;
+  string browserChoose = "0";
   cout << "There is a total of " << totalFiles << " files in the directory." << endl
   << "To choose an option enter the corresponding number." << endl;
-  while (browserChoose!=-1){
+  while (browserChoose!="-1"){
     cout << "====================================================================================" << endl;
     cout << "Search Functions: " <<
     "Search One Word (1) -" << "- Search Two Word (2) -" <<
     "- Exit Browser (-1)" << endl << "Select Function: ";
     cin >> browserChoose;
-    if(browserChoose==1){
+    if(browserChoose=="1"){
       //Single Search
       singleSearch();}
-    if(browserChoose==2){
+    if(browserChoose=="2"){
       //Double Word Search
       doubleSearch();}
     }
